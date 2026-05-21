@@ -1,0 +1,210 @@
+random_table:
+  precision:
+    low:
+      timestep: 0.010
+      iterations: 50
+      frame_skip: 2
+    medium:
+      timestep: 0.005
+      iterations: 50
+      frame_skip: 4
+    high:
+      timestep: 0.0025
+      iterations: 75
+      frame_skip: 8
+    ultra:
+      timestep: 0.00125
+      iterations: 75
+      frame_skip: 16
+    extreme:
+      timestep: 0.000625
+      iterations: 100
+      frame_skip: 32
+
+  sensor_noise:
+    none:
+      dof_pos:
+        mean: 0.0
+        std: 0.0000001
+        lower: -0.00000001
+        upper: 0.00000001
+      dof_vel:
+        mean: 0.0
+        std: 0.0000001
+        lower: -0.00000001
+        upper: 0.00000001
+      ang_vel:
+        mean: 0.0
+        std: 0.0000001
+        lower: -0.00000001
+        upper: 0.00000001
+      projected_gravity:
+        mean: 0.0
+        std: 0.0000001
+        lower: -0.00000001
+        upper: 0.00000001
+      lin_vel:
+        mean: 0.0
+        std: 0.0000001
+        lower: -0.00000001
+        upper: 0.00000001
+      height_map:
+        mean: 0.0
+        std: 0.0000001
+        lower: -0.00000001
+        upper: 0.00000001
+    low:
+      dof_pos:
+        mean: 0.0
+        std: 0.005
+        lower: -0.01
+        upper: 0.01
+      dof_vel:
+        mean: 0.0
+        std: 0.033
+        lower: -0.066
+        upper: 0.066
+      ang_vel:
+        mean: 0.0
+        std: 0.002
+        lower: -0.004
+        upper: 0.004
+      projected_gravity:
+        mean: 0.0
+        std: 0.001
+        lower: -0.005
+        upper: 0.005
+      lin_vel:
+        mean: 0.0
+        std: 0.01
+        lower: -0.02
+        upper: 0.02
+      height_map:
+        mean: 0.0
+        std: 0.01
+        lower: -0.02
+        upper: 0.02
+    medium:
+      dof_pos:
+        mean: 0.0
+        std: 0.004
+        lower: -0.008
+        upper: 0.008
+      dof_vel:
+        mean: 0.0
+        std: 0.09
+        lower: -0.18
+        upper: 0.18
+      ang_vel:
+        mean: 0.0
+        std: 0.005
+        lower: -0.01
+        upper: 0.01
+      projected_gravity:
+        mean: 0.0
+        std: 0.0025
+        lower: -0.01
+        upper: 0.01
+      lin_vel:
+        mean: 0.0
+        std: 0.015
+        lower: -0.03
+        upper: 0.03
+      height_map:
+        mean: 0.0
+        std: 0.015
+        lower: -0.03
+        upper: 0.03
+    high:
+      dof_pos:
+        mean: 0.0
+        std: 0.005
+        lower: -0.010
+        upper: 0.010
+      dof_vel:
+        mean: 0.0
+        std: 0.12
+        lower: -0.24
+        upper: 0.24
+      ang_vel:
+        mean: 0.0
+        std: 0.006
+        lower: -0.012
+        upper: 0.012
+      projected_gravity:
+        mean: 0.0
+        std: 0.01
+        lower: -0.02
+        upper: 0.02
+      lin_vel:
+        mean: 0.0
+        std: 0.03
+        lower: -0.06
+        upper: 0.06
+      height_map:
+        mean: 0.0
+        std: 0.025
+        lower: -0.05
+        upper: 0.05
+    ultra:
+      dof_pos:
+        mean: 0.0
+        std: 0.006
+        lower: -0.012
+        upper: 0.012
+      dof_vel:
+        mean: 0.0
+        std: 0.16
+        lower: -0.32
+        upper: 0.32
+      ang_vel:
+        mean: 0.0
+        std: 0.008
+        lower: -0.016
+        upper: 0.016
+      projected_gravity:
+        mean: 0.0
+        std: 0.02
+        lower: -0.04
+        upper: 0.04
+      lin_vel:
+        mean: 0.0
+        std: 0.06
+        lower: -0.12
+        upper: 0.12
+      height_map:
+        mean: 0.0
+        std: 0.04
+        lower: -0.08
+        upper: 0.08
+    extreme:
+      dof_pos:
+        mean: 0.0
+        std: 0.007
+        lower: -0.014
+        upper: 0.014
+      dof_vel:
+        mean: 0.0
+        std: 0.20
+        lower: -0.40
+        upper: 0.40
+      ang_vel:
+        mean: 0.0
+        std: 0.010
+        lower: -0.020
+        upper: 0.020
+      projected_gravity:
+        mean: 0.0
+        std: 0.04
+        lower: -0.08
+        upper: 0.08
+      lin_vel:
+        mean: 0.0
+        std: 0.12
+        lower: -0.24
+        upper: 0.24
+      height_map:
+        mean: 0.0
+        std: 0.05
+        lower: -0.1
+        upper: 0.1

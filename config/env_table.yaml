@@ -1,0 +1,29 @@
+# obs fields: ["dof_pos", "dof_vel", "ang_vel", "lin_vel_x", "lin_vel_y", "lin_vel_z", "projected_gravity", "height_map", "last_action"]  
+"flamingo_light_p_v3":
+  "stacked_obs_order": ["dof_pos", "dof_vel", "ang_vel", "projected_gravity", "last_action"]
+  "stack_size": 3
+  "non_stacked_obs_order": []
+  "obs_scales":
+    "dof_pos": 1.0
+    "dof_vel": 0.15
+    "ang_vel": 0.25
+    "lin_vel_x": 2.0
+    "lin_vel_y": 2.0
+    "lin_vel_z": 2.0  
+  "command":
+    "command_dim": 4
+    "command_3_initial": 0
+  "command_scales":
+    "0": 2.0
+    "1": 0.0
+    "2": 0.25
+    "3": 1.0
+    "4": 1.0
+    "5": 1.0
+  "hardware":
+    "action_dim": 4
+    "Kp_shoulder": 35 
+    "Kd_shoulder": 0.45
+    "Kd_wheel": 0.3
+    "leg_max_torque": 36
+    "wheel_max_torque": 17
