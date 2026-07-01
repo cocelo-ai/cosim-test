@@ -18,6 +18,31 @@
 `cosim` is a **Sim-to-Sim Framework** built on the MuJoCo physics engine.  
 It is designed to study transitions between different simulation environments and evaluate model performance under varying physical and sensory conditions.
 
+## Supported Robots
+
+This test repository currently supports four robot environments:
+
+- `flamingo_light_p_v3`
+- `flamingo_p_v3_1`
+- `wheeldog_p_v2`
+- `humanoid_light_v2`
+
+Each robot can be selected from the Environment Settings panel in the GUI. The runtime path is kept lightweight: training datasets, generated weights, and archived assets are intentionally excluded from the repository.
+
+## Example Policies
+
+Example ONNX policies are included for quick smoke testing:
+
+```text
+example_policy/
+├── flamingo_light_p_v3/policy.onnx
+├── flamingo_p_v3_1/policy.onnx
+├── wheeldog_p_v2/policy.onnx
+└── humanoid_light_v2/policy.onnx
+```
+
+After launching the GUI, select the matching robot ID and choose the corresponding `policy.onnx` file from `example_policy/<robot_id>/`.
+
 ## Key Features
 
 - **📌 MuJoCo-Powered Simulation**  
@@ -80,6 +105,7 @@ python launch.py
 cosim/
 ├── core/                 # Policy interface and testing logic
 ├── envs/                 # Environment wrapper and simulation backend
+├── example_policy/       # Example ONNX policies for supported robots
 ├── config/               # YAML configuration files
 ├── docs/                 # docs
 ├── gui/                  # Main PyQt5-based user interface
