@@ -302,8 +302,8 @@ class CommandWrapper(BaseEnv):
         assert self.command_dim > 0, "command_dim must be greater than 0."
 
     def receive_user_command(self, user_command):
-        self.user_command = user_command[:self.command_dim]
-        self.applied_command[:] = user_command
+        self.user_command = np.asarray(user_command[:self.command_dim], dtype=np.float32)
+        self.applied_command[:] = self.user_command
 
         if self.config["env"]["position_command"] is False:
             for i in range(self.command_dim):
@@ -366,5 +366,4 @@ class CommandWrapper(BaseEnv):
 
     def close(self):
         self.env.close()
-
 

@@ -1,0 +1,68 @@
+{
+  "env_id": "wheeldog_p_v2",
+  "dataset_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/wheeldog_p_v2/dataset/height_map_supervision/20260423_113029/dataset.npz",
+  "dataset_paths": [
+    "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/wheeldog_p_v2/dataset/height_map_supervision/20260423_113029/dataset.npz"
+  ],
+  "samples": 2902,
+  "train_samples": 2467,
+  "val_samples": 435,
+  "epochs": 10,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "best_val_loss": 0.03602996947509902,
+  "checkpoint_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/wheeldog_p_v2/weights/vision_heightmap/latest/vision_heightmap_predictor.pt",
+  "onnx_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/wheeldog_p_v2/weights/vision_heightmap/latest/vision_heightmap_predictor.onnx",
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.14145131991841856,
+      "val_loss": 0.05301034663404737
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.04449614806052966,
+      "val_loss": 0.04326328156249864
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.04167091120512058,
+      "val_loss": 0.04126302685056414
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.04064106511381956,
+      "val_loss": 0.0404583497771195
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.03966689959932596,
+      "val_loss": 0.039841952600649426
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.038731311089717425,
+      "val_loss": 0.03858666547707149
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.038861008981863655,
+      "val_loss": 0.03777886075632913
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.038027798995757714,
+      "val_loss": 0.03703465365937778
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.03685916711886724,
+      "val_loss": 0.03887955631528582
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.0365545222392449,
+      "val_loss": 0.03602996947509902
+    }
+  ]
+}

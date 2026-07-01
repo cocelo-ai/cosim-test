@@ -1,0 +1,14 @@
+{
+  "env_id": "wheeldog_p_v2",
+  "format": "depth_history_to_height_map_v2",
+  "depth_history_length": 3,
+  "depth_shape": [
+    60,
+    80
+  ],
+  "depth_scale": 8,
+  "height_map_shape": [
+    6,
+    10
+  ]
+}

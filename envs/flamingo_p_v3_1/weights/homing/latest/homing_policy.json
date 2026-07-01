@@ -1,0 +1,16 @@
+{
+  "note": "Homing policy actor export. Input shape matches the stand-drive observation; PPO fine-tune does not append phase.",
+  "env_id": "flamingo_p_v3_1",
+  "checkpoint_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/flamingo_p_v3_1/weights/homing/latest/homing_policy_ppo.pt",
+  "onnx_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/flamingo_p_v3_1/weights/homing/latest/homing_policy.onnx",
+  "input_dim": 88,
+  "action_dim": 8,
+  "checkpoint_type": "ppo_actor_critic",
+  "input_mode": "obs",
+  "onnx_inputs": [
+    "obs"
+  ],
+  "onnx_outputs": [
+    "action"
+  ]
+}

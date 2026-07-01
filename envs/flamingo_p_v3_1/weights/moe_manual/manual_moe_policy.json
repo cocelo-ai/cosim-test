@@ -1,0 +1,50 @@
+{
+  "note": "Manual MoE ONNX graph with alpha read from the final command value.",
+  "policy_a_path": "/home/sanghyunryoo/Documents/4w4l/Isaac-RL-Two-wheel-Legged-Bot_joint/logs/co_rl/Flamingo_Flat_Stand_Drive_v3/ppo/2026-04-16_16-09-29/exported/policy_1.onnx",
+  "policy_b_path": "/home/sanghyunryoo/Documents/4w4l/Isaac-RL-Two-wheel-Legged-Bot_joint/logs/co_rl/Flamingo_Rough_Stand_Drive_v3/ppo/2026-05-12_19-33-41/exported/policy_1.onnx",
+  "expert_obs_dim": 88,
+  "manual_obs_dim": 89,
+  "alpha_command_index": 88,
+  "alpha_range": [
+    0.0,
+    1.0
+  ],
+  "moe_onnx_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/flamingo_p_v3_1/weights/moe_manual/manual_moe_policy.onnx",
+  "formula": "alpha = clip(obs[..., -1], 0, 1); physical_a = policy_A(obs) * scale_A; physical_b = policy_B(obs) * scale_B; action = ((1-alpha)*physical_a + alpha*physical_b) / output_scale",
+  "policy_a_action_scales": [
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    40.0,
+    40.0
+  ],
+  "policy_b_action_scales": [
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    0.0,
+    0.0
+  ],
+  "output_action_scales": [
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    0.25,
+    1.0,
+    1.0
+  ],
+  "onnx_inputs": [
+    "obs"
+  ],
+  "onnx_outputs": [
+    "action"
+  ]
+}

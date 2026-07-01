@@ -1,4 +1,9 @@
-# obs fields: ["dof_pos", "dof_vel", "ang_vel", "lin_vel_x", "lin_vel_y", "lin_vel_z", "projected_gravity", "height_map", "last_action"]  
+# obs fields:
+# ["dof_pos", "dof_vel", "ang_vel", "lower_ang_vel", "upper_ang_vel",
+#  "lin_vel_x", "lin_vel_y", "lin_vel_z",
+#  "projected_gravity", "lower_projected_gravity", "upper_projected_gravity",
+#  "height_map", "last_action"]
+
 "flamingo_light_p_v3":
   "stacked_obs_order": ["dof_pos", "dof_vel", "ang_vel", "projected_gravity", "last_action"]
   "stack_size": 3
@@ -9,7 +14,7 @@
     "ang_vel": 0.25
     "lin_vel_x": 2.0
     "lin_vel_y": 2.0
-    "lin_vel_z": 2.0  
+    "lin_vel_z": 2.0
   "command":
     "command_dim": 4
     "command_3_initial": 0
@@ -22,8 +27,208 @@
     "5": 1.0
   "hardware":
     "action_dim": 4
-    "Kp_shoulder": 35 
+    "actuator_mode": "torque"
+    "Kp_shoulder": 35
     "Kd_shoulder": 0.45
     "Kd_wheel": 0.3
     "leg_max_torque": 36
+    "leg_max_vel": 43
     "wheel_max_torque": 17
+    "wheel_max_vel": 43
+
+"flamingo_p_v3_1":
+  "stacked_obs_order": ["dof_pos", "dof_vel", "ang_vel", "projected_gravity", "last_action"]
+  "stack_size": 3
+  "non_stacked_obs_order": []
+  "obs_scales":
+    "dof_pos": 1.0
+    "dof_vel": 0.05
+    "ang_vel": 0.25
+    "lin_vel_x": 2.0
+    "lin_vel_y": 1.0
+    "lin_vel_z": 0.25
+  "command":
+    "command_dim": 4
+    "command_3_initial": 0
+  "command_scales":
+    "0": 2.0
+    "1": 1.0
+    "2": 0.25
+    "3": 1.0
+    "4": 1.0
+    "5": 1.0
+  "height_map":
+    "size_x": 1.1
+    "size_y": 1.1
+    "res_x": 12
+    "res_y": 12
+  "action_scales": [0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 40.0, 40.0]
+  "hardware":
+    "action_dim": 8
+    "actuator_mode": "torque"
+    "Kp_hip": 70
+    "Kp_shoulder": 70
+    "Kp_leg": 70
+    "Kd_hip": 1.0
+    "Kd_shoulder": 1.0
+    "Kd_leg": 1.0
+    "Kd_wheel": 0.7
+    "hip_max_torque": 60
+    "hip_max_vel": 20
+    "shoulder_max_torque": 60
+    "shoulder_max_vel": 20
+    "leg_max_torque": 60
+    "leg_max_vel": 20
+    "wheel_max_torque": 36
+    "wheel_max_vel": 53
+    "gear_ratio": -1.5
+    "gamma": 0.98
+
+"wheeldog_p_v2":
+  "stacked_obs_order": ["dof_pos", "dof_vel", "ang_vel", "projected_gravity", "last_action"]
+  "stack_size": 3
+  "non_stacked_obs_order": []
+  "obs_scales":
+    "dof_pos": 1.0
+    "dof_vel": 0.15
+    "ang_vel": 0.25
+  "command":
+    "command_dim": 3
+    "command_3_initial": 0
+  "command_scales":
+    "0": 2.0
+    "1": 1.0
+    "2": 0.25
+    "3": 1.0
+    "4": 1.0
+    "5": 1.0
+  "height_map":
+    "size_x": 1.0
+    "size_y": 0.6
+    "res_x": 15
+    "res_y": 9
+  "action_scales": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 40.0, 40.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 40.0, 40.0]
+  "hardware":
+    "action_dim": 16
+    "actuator_mode": "torque"
+    "Kp_hip": 100
+    "Kp_shoulder": 100
+    "Kp_leg": 120
+    "Kd_hip": 1.5
+    "Kd_shoulder": 1.5
+    "Kd_leg": 1.5
+    "Kd_wheel": 0.7
+    "hip_max_torque": 60
+    "hip_max_vel": 20
+    "shoulder_max_torque": 60
+    "shoulder_max_vel": 20
+    "leg_max_torque": 90
+    "leg_max_vel": 50
+    "wheel_max_torque": 36
+    "wheel_max_vel": 53
+    "gear_ratio": -1.5
+    "gamma": 0.98
+
+"humanoid_light_v2":
+  "stacked_obs_order": ["dof_pos", "dof_vel", "lower_ang_vel", "upper_ang_vel", "lower_projected_gravity", "upper_projected_gravity", "last_action"]
+  "stack_size": 3
+  "non_stacked_obs_order": []
+  "obs_scales":
+    "dof_pos": 1.0
+    "dof_vel": 0.15
+    "ang_vel": 0.25
+    "lower_ang_vel": 0.25
+    "upper_ang_vel": 0.25
+    "lin_vel_x": 2.0
+    "lin_vel_y": 2.0
+    "lin_vel_z": 2.0
+    "projected_gravity": 1.0
+    "lower_projected_gravity": 1.0
+    "upper_projected_gravity": 1.0
+  "command":
+    "command_dim": 4
+    "command_3_initial": 0
+  "command_scales":
+    "0": 2.0
+    "1": 2.0
+    "2": 1.0
+    "3": 1.0
+    "4": 1.0
+    "5": 1.0
+  "height_map":
+    "size_x": 1.0
+    "size_y": 0.6
+    "res_x": 15
+    "res_y": 9
+  "action_scales": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+  "hardware":
+    "action_dim": 26
+    "actuator_mode": "torque"
+    "coupled_enabled": true
+    "ankle_gear_ratio_1": -2.0
+    "ankle_gear_ratio_2": -2.0
+    "right_ankle_mirror": false
+    "torso_pitch_roll_gear_ratio_1": 1.0
+    "torso_pitch_roll_gear_ratio_2": 1.0
+    "Kp_hip_pitch": 100
+    "Kp_torso_yaw": 100
+    "Kp_torso_pitch": 100
+    "Kp_torso_roll": 100
+    "Kp_hip_roll": 100
+    "Kp_shoulder_pitch": 100
+    "Kp_hip_yaw": 100
+    "Kp_shoulder_roll": 100
+    "Kp_knee": 100
+    "Kp_shoulder_yaw": 25
+    "Kp_ankle_pitch": 20
+    "Kp_ankle_roll": 20
+    "Kp_elbow": 50
+    "Kp_wrist": 50
+    "Kp_head": 20
+    "Kd_hip_pitch": 1.0
+    "Kd_torso_yaw": 1.0
+    "Kd_torso_pitch": 1.0
+    "Kd_torso_roll": 1.0
+    "Kd_hip_roll": 1.0
+    "Kd_shoulder_pitch": 1.0
+    "Kd_hip_yaw": 1.0
+    "Kd_shoulder_roll": 1.0
+    "Kd_knee": 1.0
+    "Kd_shoulder_yaw": 1.0
+    "Kd_ankle_pitch": 0.25
+    "Kd_ankle_roll": 0.25
+    "Kd_elbow": 1.0
+    "Kd_wrist": 1.0
+    "Kd_head": 0.25
+    "hip_roll_joint_max_torque": 60
+    "hip_roll_joint_max_vel": 20
+    "hip_pitch_joint_max_torque": 120
+    "hip_pitch_joint_max_vel": 80
+    "hip_yaw_joint_max_torque": 60
+    "hip_yaw_joint_max_vel": 20
+    "knee_joint_max_torque": 120
+    "knee_joint_max_vel": 80
+    "torso_joint_max_torque": 60
+    "torso_joint_max_vel": 20
+    "torso_yaw_joint_max_torque": 60
+    "torso_yaw_joint_max_vel": 20
+    "torso_pitch_joint_max_torque": 36
+    "torso_pitch_joint_max_vel": 53
+    "torso_roll_joint_max_torque": 36
+    "torso_roll_joint_max_vel": 53
+    "ankle_roll_joint_max_torque": 14
+    "ankle_roll_joint_max_vel": 36
+    "ankle_pitch_joint_max_torque": 14
+    "ankle_pitch_joint_max_vel": 36
+    "shoulder_roll_joint_max_torque": 60
+    "shoulder_roll_joint_max_vel": 20
+    "shoulder_pitch_joint_max_torque": 60
+    "shoulder_pitch_joint_max_vel": 20
+    "shoulder_yaw_joint_max_torque": 17
+    "shoulder_yaw_joint_max_vel": 40
+    "elbow_joint_max_torque": 36
+    "elbow_joint_max_vel": 53
+    "wrist_joint_max_torque": 14
+    "wrist_joint_max_vel": 36
+    "head_joint_max_torque": 5.5
+    "head_joint_max_vel": 20

@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QThread, Qt, QEvent, QUrl
 from PyQt5.QtGui import QDesktopServices, QIcon
 from core.tester import Tester
+from envs.build import get_supported_env_ids
 from ui.utils import to_float, to_int, normalize_numkey_float_values
 from ui.custom_widgets import NoWheelComboBox, NoWheelSlider, NonClickableButton
 from ui.dialogs.hardware_settings import HardwareSettingsDialog
@@ -24,8 +25,23 @@ class MainWindow(QMainWindow):
         config_path = os.path.abspath(config_path)
         with open(config_path) as f:
             self.env_config = yaml.full_load(f)
+        supported_env_ids = set(get_supported_env_ids())
+        self.env_config = {
+            env_id: config
+            for env_id, config in self.env_config.items()
+            if env_id in supported_env_ids
+        }
+        if not self.env_config:
+            raise RuntimeError("No supported environments found in config/env_table.yaml.")
 
-        self.obs_types = ["dof_pos", "dof_vel", "lin_vel_x", "lin_vel_y", "lin_vel_z", "ang_vel", "projected_gravity", "height_map", "last_action"]
+        self.obs_types = [
+            "dof_pos", "dof_vel",
+            "lin_vel_x", "lin_vel_y", "lin_vel_z",
+            "ang_vel", "lower_ang_vel", "upper_ang_vel",
+            "projected_gravity", "lower_projected_gravity", "upper_projected_gravity",
+            "height_map",
+            "last_action",
+        ]
 
         # Per-environment observation settings cache
         self.obs_settings_by_env = {}
@@ -136,6 +152,8 @@ class MainWindow(QMainWindow):
                 "freq": 50,
                 "scale": 1.0,
             }
+            for key, value in height_map_yaml.items():
+                height_map_val.setdefault(key, value)
         else:
             height_map_val = None
 
@@ -164,6 +182,27 @@ class MainWindow(QMainWindow):
         hw = env_cfg.get("hardware", {}) or {}
         # Keep string values (editable in dialog). Numeric conversion is done in _gather_config.
         return hw.copy()
+
+    @staticmethod
+    def _coerce_config_value(value):
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, (int, float)):
+            return value
+        if isinstance(value, str):
+            text = value.strip()
+            lowered = text.lower()
+            if lowered in ("true", "false"):
+                return lowered == "true"
+            try:
+                return float(text)
+            except ValueError:
+                return value
+        if isinstance(value, dict):
+            return {k: MainWindow._coerce_config_value(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [MainWindow._coerce_config_value(v) for v in value]
+        return value
 
     def _ensure_hardware_defaults(self):
         """Ensure current env has cached hardware settings and sync self.hardware_settings."""
@@ -769,8 +808,11 @@ class MainWindow(QMainWindow):
     def _gather_config(self):
         try:
             self._ensure_hardware_defaults()
-            # hardware: convert numeric strings to float where applicable
-            hardware_numeric = {k: to_float(v, v) for k, v in self.hardware_settings.items()}
+            # hardware: convert numeric strings to numbers, preserving modes/flags.
+            hardware_settings = {
+                k: self._coerce_config_value(v)
+                for k, v in self.hardware_settings.items()
+            }
 
             # observation: copy latest settings for the current env
             env_id = self.env_id_cb.currentText()
@@ -795,6 +837,8 @@ class MainWindow(QMainWindow):
                 hm_val.setdefault("res_y", yaml_hm_defaults["res_y"])
                 hm_val.setdefault("freq", 50)
                 hm_val.setdefault("scale", 1.0)
+                for key, value in yaml_hm.items():
+                    hm_val.setdefault(key, value)
                 observation["height_map"] = hm_val
             elif hm_val is None:
                 observation["height_map"] = None
@@ -827,8 +871,11 @@ class MainWindow(QMainWindow):
                     "mass_noise": self.mass_noise_slider.value() / 100.0,
                     "load": self.load_slider.value() / 10.0
                 },
-                "hardware": hardware_numeric
+                "hardware": hardware_settings
             }
+            for key in ("action_scales", "action_clippings", "initial_pose", "initial_positions", "joint_offsets"):
+                if key in env_cfg:
+                    config[key] = env_cfg[key]
 
             # random_table (only if present)
             cur_file_path = os.path.abspath(__file__)

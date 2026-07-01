@@ -1,0 +1,50 @@
+{
+  "env_id": "wheeldog_p_v2",
+  "policy_path": "/home/sanghyunryoo/Documents/4w4l/Isaac-RL-Two-wheel-Legged-Bot_joint/logs/co_rl/Flamingo4w4l_Rough_Stand_Drive/ppo/2026-02-08_11-58-59/exported/policy.onnx",
+  "samples": 5000,
+  "input_dim": 153,
+  "action_dim": 16,
+  "final_pos": [
+    0.0,
+    0.0,
+    1.2000000476837158,
+    1.2000000476837158,
+    1.2000000476837158,
+    1.2000000476837158,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    1.2000000476837158,
+    1.2000000476837158,
+    1.2000000476837158,
+    1.2000000476837158,
+    0.0,
+    0.0
+  ],
+  "final_vel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "trajectory_seconds": 3.0,
+  "stand_warmup_steps": 200,
+  "teacher": {
+    "trajectory": "smoothstep action-space interpolation"
+  },
+  "input_mode": "obs",
+  "dataset_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/wheeldog_p_v2/dataset/homing/20260506_222156/dataset.npz"
+}

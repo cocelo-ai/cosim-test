@@ -1,0 +1,36 @@
+{
+  "env_id": "flamingo_p_v3_1",
+  "mode": "ctbc_reflex",
+  "checkpoint_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/flamingo_p_v3_1/weights/ctbc/latest/ctbc_policy_ppo.pt",
+  "onnx_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/flamingo_p_v3_1/weights/ctbc/latest/ctbc_policy.onnx",
+  "manifest_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/flamingo_p_v3_1/weights/ctbc/latest/ctbc_policy_manifest.json",
+  "steps": 32768,
+  "input_dim": 88,
+  "action_dim": 8,
+  "selected_update": 0,
+  "selected_metrics": {
+    "reflex_loss": 0.0015081351157277822,
+    "reflex_samples": 32768,
+    "target_residual_rmse": 0.5710374712944031,
+    "residual_rmse": 0.5729582905769348,
+    "flat_leak_rmse": 0.012639477849006653,
+    "trigger_fraction": 0.0
+  },
+  "history": [
+    {
+      "update": 0,
+      "steps": 32768,
+      "mean_reward": 0.0,
+      "mean_episode_return": 0.0,
+      "bc_loss": 0.0015081351157277822,
+      "residual_rmse": 0.5729582905769348,
+      "flat_leak_rmse": 0.012639477849006653,
+      "target_residual_rmse": 0.5710374712944031,
+      "trigger_fraction": 0.0,
+      "stair_height": 0.2,
+      "selectable": 1.0,
+      "selection_score": 0.0015081351157277822
+    }
+  ],
+  "stopped": false
+}

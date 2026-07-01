@@ -1,0 +1,34 @@
+{
+  "env_id": "flamingo_p_v3_1",
+  "policy_path": "/home/sanghyunryoo/Documents/4w4l/Isaac-RL-Two-wheel-Legged-Bot_joint/logs/co_rl/Flamingo_Flat_Stand_Drive_v3/ppo/2026-04-16_16-09-29/exported/policy_1.onnx",
+  "samples": 5000,
+  "input_dim": 88,
+  "action_dim": 8,
+  "final_pos": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.5,
+    0.5,
+    0.0,
+    0.0
+  ],
+  "final_vel": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "trajectory_seconds": 3.0,
+  "stand_warmup_steps": 200,
+  "teacher": {
+    "trajectory": "smoothstep action-space interpolation"
+  },
+  "input_mode": "obs",
+  "dataset_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/flamingo_p_v3_1/dataset/homing/20260506_222803/dataset.npz"
+}

@@ -5,6 +5,17 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QDoubleValidator
 
+
+def _is_numeric_value(value):
+    if isinstance(value, bool):
+        return False
+    try:
+        float(value)
+        return True
+    except (TypeError, ValueError):
+        return False
+
+
 class HardwareSettingsDialog(QDialog):
     def __init__(self, hardware_settings, parent):
         super().__init__(parent)
@@ -30,7 +41,8 @@ class HardwareSettingsDialog(QDialog):
         for key, value in self.hardware_settings.items():
             label = QLabel(key)
             le = QLineEdit(str(value))
-            le.setValidator(QDoubleValidator())  # Allow only floating-point input
+            if _is_numeric_value(value):
+                le.setValidator(QDoubleValidator())
             form_layout.addRow(label, le)
             self.fields[key] = le
 

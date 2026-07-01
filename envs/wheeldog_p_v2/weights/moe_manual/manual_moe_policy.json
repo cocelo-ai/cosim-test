@@ -1,0 +1,20 @@
+{
+  "note": "Manual MoE ONNX graph with alpha read from the final command value.",
+  "policy_a_path": "/home/sanghyunryoo/Documents/4w4l/Isaac-RL-Two-wheel-Legged-Bot_joint/logs/co_rl/Flamingo4w4l_Rough_Stand_Drive/ppo/2026-02-08_11-58-59/exported/policy.onnx",
+  "policy_b_path": "/home/sanghyunryoo/Documents/4w4l/Isaac-RL-Two-wheel-Legged-Bot_joint/logs/co_rl/Flamingo4w4l_Rough_Stand_Drive/ppo/2026-02-09_01-58-08/exported/policy_sh_rough3.onnx",
+  "expert_obs_dim": 153,
+  "manual_obs_dim": 154,
+  "alpha_command_index": 153,
+  "alpha_range": [
+    0.0,
+    1.0
+  ],
+  "moe_onnx_path": "/home/sanghyunryoo/Documents/4w4l/cosim_act_net/cosim_act_net/envs/wheeldog_p_v2/weights/moe_manual/manual_moe_policy.onnx",
+  "formula": "alpha = clip(obs[..., -1], 0, 1); action = (1 - alpha) * policy_A(obs[..., :-1]) + alpha * policy_B(obs[..., :-1])",
+  "onnx_inputs": [
+    "obs"
+  ],
+  "onnx_outputs": [
+    "action"
+  ]
+}

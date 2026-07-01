@@ -71,8 +71,11 @@ class ObservationSettingsDialog(QDialog):
         # Keep obs_types consistent with MainWindow
         self.obs_types = [
             "dof_pos", "dof_vel", "ang_vel",
+            "lower_ang_vel", "upper_ang_vel",
             "lin_vel_x", "lin_vel_y", "lin_vel_z",
-            "projected_gravity", "height_map", "last_action"
+            "projected_gravity", "lower_projected_gravity", "upper_projected_gravity",
+            "height_map",
+            "last_action"
         ]
 
         # Saved settings (highest priority source)
@@ -489,6 +492,9 @@ class ObservationSettingsDialog(QDialog):
         height_map = {
             "size_x": sx, "size_y": sy, "res_x": rx, "res_y": ry, "freq": hm_freq, "scale": hm_scale
         } if hm_selected else None
+        if height_map is not None and isinstance(self.settings.get("height_map"), dict):
+            for key, value in self.settings["height_map"].items():
+                height_map.setdefault(key, value)
 
         # Avoid duplicate/ambiguous "height_map" entry (details live in height_map above)
         obs_dict.pop("height_map", None)
