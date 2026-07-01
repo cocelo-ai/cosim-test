@@ -7,6 +7,13 @@
 # Ignore any .pdf files
 *.pdf
 
+# Ignore generated policies, datasets, and archived assets
+envs/**/weights/
+envs/**/dataset/
+envs/**/*.zip
+*.pt
+*.npz
+
 # Ignore .idea
 *.idea
 
