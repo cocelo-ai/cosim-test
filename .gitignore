@@ -3,6 +3,7 @@
 
 # Ignore any .onnx files
 *.onnx
+!example_policy/**/*.onnx
 
 # Ignore any .pdf files
 *.pdf
