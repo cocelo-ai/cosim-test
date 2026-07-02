@@ -198,7 +198,7 @@ class XMLManager:
                 ET.SubElement(
                     asset,
                     "mesh",
-                    {"name": mesh_name, "file": f"../mesh/visual/{mesh_name}.STL"},
+                    {"name": mesh_name, "file": f"../mesh/{mesh_name}.STL"},
                 )
                 existing_meshes.add(mesh_name)
 

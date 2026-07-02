@@ -221,22 +221,6 @@ class HumanoidLightV2(MujocoEnv, utils.EzPickle):
             "left_wrist_joint",
             "right_wrist_joint",
         ]
-        self.actuator_joint_names_in_order = [
-            "head_joint",
-            "left_hip_pitch_joint", "right_hip_pitch_joint",
-            "left_hip_roll_joint", "right_hip_roll_joint",
-            "left_hip_yaw_joint", "right_hip_yaw_joint",
-            "left_knee_joint", "right_knee_joint",
-            "left_ankle_pitch_joint", "right_ankle_pitch_joint",
-            "left_ankle_roll_joint", "right_ankle_roll_joint",
-            "torso_yaw_joint", "torso_roll_joint", "torso_pitch_joint",
-            "left_shoulder_pitch_joint", "right_shoulder_pitch_joint",
-            "left_shoulder_roll_joint", "right_shoulder_roll_joint",
-            "left_shoulder_yaw_joint", "right_shoulder_yaw_joint",
-            "left_elbow_joint", "right_elbow_joint",
-            "left_wrist_joint", "right_wrist_joint",
-        ]
-
         # If config action_dim mismatches, prefer the joint list length for safety.
         if self.action_dim != len(self.joint_names_in_order):
             # Keep running, but align internal dims with the joint list.
@@ -295,12 +279,6 @@ class HumanoidLightV2(MujocoEnv, utils.EzPickle):
         # --- Indices in qpos/qvel for controlled joints ---
         self.q_indices = self.mujoco_utils.get_qpos_joint_indices_by_name(self.joint_names_in_order)
         self.qd_indices = self.mujoco_utils.get_qvel_joint_indices_by_name(self.joint_names_in_order)
-        self.ctrl_from_policy_order = np.array(
-            [self.joint_names_in_order.index(name) for name in self.actuator_joint_names_in_order],
-            dtype=np.int64,
-        )
-        self.policy_from_ctrl_order = np.empty_like(self.ctrl_from_policy_order)
-        self.policy_from_ctrl_order[self.ctrl_from_policy_order] = np.arange(len(self.ctrl_from_policy_order))
         self.uses_position_actuators = bool(np.any(self.model.actuator_biastype != 0))
         self.position_actuator_mask_ctrl = self.model.actuator_biastype != 0
         self.motor_actuator_mask_ctrl = ~self.position_actuator_mask_ctrl
@@ -651,7 +629,7 @@ class HumanoidLightV2(MujocoEnv, utils.EzPickle):
             -self.max_torque_by_joint,
             self.max_torque_by_joint,
         ).astype(np.float64)
-        self.ctrl_torques = self.applied_torques[self.ctrl_from_policy_order]
+        self.ctrl_torques = self.applied_torques.copy()
         return self.ctrl_torques
 
     # -----------------------
@@ -663,7 +641,7 @@ class HumanoidLightV2(MujocoEnv, utils.EzPickle):
         action_scaled = scale_and_clip_action(self.filtered_action, self.action_scaler, self.action_clip_min, self.action_clip_max)
         position_targets = self._motor_to_joint_position(action_scaled) if self.coupled_control_enabled else action_scaled
         if self.uses_hybrid_actuators:
-            position_ctrl = position_targets[self.ctrl_from_policy_order].copy()
+            position_ctrl = position_targets.copy()
 
             def ctrl_fn():
                 ctrl = position_ctrl.copy()
@@ -674,12 +652,12 @@ class HumanoidLightV2(MujocoEnv, utils.EzPickle):
             simulate_dynamic_ctrl(self, ctrl_fn)
             actuator_force = self.data.actuator_force.astype(np.float64)
             self.ctrl_torques = actuator_force.copy()
-            self.applied_torques = actuator_force[self.policy_from_ctrl_order].copy()
+            self.applied_torques = actuator_force.copy()
         elif self.uses_position_actuators:
-            self.do_simulation(position_targets[self.ctrl_from_policy_order], self.frame_skip)
+            self.do_simulation(position_targets, self.frame_skip)
             actuator_force = self.data.actuator_force.astype(np.float64)
             self.ctrl_torques = actuator_force.copy()
-            self.applied_torques = actuator_force[self.policy_from_ctrl_order].copy()
+            self.applied_torques = actuator_force.copy()
         else:
             simulate_dynamic_ctrl(self, lambda: self._update_pd_torques(action_scaled))
 
