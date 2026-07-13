@@ -14,6 +14,7 @@ from ui.utils import to_float, to_int, normalize_numkey_float_values
 from ui.custom_widgets import NoWheelComboBox, NoWheelSlider, NonClickableButton
 from ui.dialogs.hardware_settings import HardwareSettingsDialog
 from ui.dialogs.observation_settings import ObservationSettingsDialog
+from ui.dialogs.action_settings import ActionSettingsDialog
 from ui.workers import TesterWorker
 from PyQt5.QtWidgets import QSizePolicy
 
@@ -75,6 +76,8 @@ class MainWindow(QMainWindow):
         self.command_timer = None
         self.hardware_settings = {}
         self.hardware_settings_by_env = {}
+        self.action_settings = {}
+        self.action_settings_by_env = {}
 
         # Whether the user manually changed observation settings via dialog (kept for reference; cache now used)
         self.observation_overridden_by_user = False
@@ -211,6 +214,25 @@ class MainWindow(QMainWindow):
             self.hardware_settings_by_env[env_id] = self._make_hardware_defaults(env_id)
         self.hardware_settings = (self.hardware_settings_by_env[env_id]).copy()
 
+    # ---------------- per-env action helpers ----------------
+    def _make_action_defaults(self, env_id: str):
+        env_cfg = self.env_config.get(env_id, {}) or {}
+        hw = env_cfg.get("hardware", {}) if isinstance(env_cfg.get("hardware", {}), dict) else {}
+        action_dim = to_int(hw.get("action_dim", 0), 0)
+        raw_scales = env_cfg.get("action_scales", [])
+        if not isinstance(raw_scales, (list, tuple)) or len(raw_scales) != action_dim:
+            raw_scales = [1.0] * action_dim
+        return {
+            "action_dim": action_dim,
+            "action_scales": [to_float(v, 1.0) for v in raw_scales],
+        }
+
+    def _ensure_action_defaults(self):
+        env_id = self.env_id_cb.currentText()
+        if env_id not in self.action_settings_by_env:
+            self.action_settings_by_env[env_id] = self._make_action_defaults(env_id)
+        self.action_settings = (self.action_settings_by_env[env_id]).copy()
+
     def update_defaults(self, new_env_id):
         settings = self.env_config.get(new_env_id, {}) or {}
         if new_env_id in self.hardware_settings_by_env:
@@ -239,6 +261,12 @@ class MainWindow(QMainWindow):
         else:
             self.observation_settings = self._make_observation_defaults(new_env_id)
             self.obs_settings_by_env[new_env_id] = (self.observation_settings).copy()
+
+        if new_env_id in self.action_settings_by_env:
+            self.action_settings = (self.action_settings_by_env[new_env_id]).copy()
+        else:
+            self.action_settings = self._make_action_defaults(new_env_id)
+            self.action_settings_by_env[new_env_id] = (self.action_settings).copy()
 
     def showEvent(self, event):
         self.centralWidget().setFocus()
@@ -466,6 +494,10 @@ class MainWindow(QMainWindow):
         obs_settings_btn = QPushButton("Observation Settings")
         obs_settings_btn.clicked.connect(self.open_observation_settings)
         env_layout.addRow("Observation:", obs_settings_btn)
+
+        action_settings_btn = QPushButton("Action Settings")
+        action_settings_btn.clicked.connect(self.open_action_settings)
+        env_layout.addRow("Action:", action_settings_btn)
 
         self.terrain_id_cb = NoWheelComboBox()
         self.terrain_id_cb.addItems([
@@ -757,6 +789,14 @@ class MainWindow(QMainWindow):
             # Mark that user manually changed settings (for reference)
             self.observation_overridden_by_user = True
 
+    def open_action_settings(self):
+        env_id = self.env_id_cb.currentText()
+        self._ensure_action_defaults()
+        dialog = ActionSettingsDialog((self.action_settings).copy(), self)
+        if dialog.exec_() == QDialog.Accepted:
+            self.action_settings = dialog.get_settings()
+            self.action_settings_by_env[env_id] = (self.action_settings).copy()
+
     # ---------------- Run / Gather Config ----------------
 
     def start_test(self):
@@ -764,6 +804,7 @@ class MainWindow(QMainWindow):
         self._last_run_had_error = False
         self._ensure_observation_defaults()
         self._ensure_hardware_defaults()
+        self._ensure_action_defaults()
 
         self.start_button.setEnabled(False)
         self.stop_button.setEnabled(True)
@@ -808,6 +849,7 @@ class MainWindow(QMainWindow):
     def _gather_config(self):
         try:
             self._ensure_hardware_defaults()
+            self._ensure_action_defaults()
             # hardware: convert numeric strings to numbers, preserving modes/flags.
             hardware_settings = {
                 k: self._coerce_config_value(v)
@@ -876,6 +918,7 @@ class MainWindow(QMainWindow):
             for key in ("action_scales", "action_clippings", "initial_pose", "initial_positions", "joint_offsets"):
                 if key in env_cfg:
                     config[key] = env_cfg[key]
+            config["action_scales"] = list(self.action_settings.get("action_scales", []))
 
             # random_table (only if present)
             cur_file_path = os.path.abspath(__file__)

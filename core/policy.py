@@ -15,7 +15,6 @@ class MLPPolicy:
             action = np.squeeze(action, axis=0)
         except:
             action = self.ort_session.run(self.output_names, {self.input_name: state})[0]
-        action = np.clip(action, -1, 1)
         return action
 
 class LSTMPolicy:
@@ -40,7 +39,6 @@ class LSTMPolicy:
         self.c_in = c_out
 
         action = np.squeeze(action, axis=0)
-        action = np.clip(action, -1, 1)
         return action
 
 class EncoderPolicy:
@@ -84,7 +82,6 @@ class EncoderPolicy:
                 action = np.squeeze(action, axis=0)
         except:
             action = self.policy_sess.run(self.pol_out_names, {self.pol_in_name: policy_in.squeeze(axis=0)})[0]
-        action = np.clip(action, -1, 1)
         return action   
     
 def build_policy(config, policy_path, encoder_path=None):

@@ -36,4 +36,4 @@ def normalize_action_clippings(config, action_dim):
 
 
 def scale_and_clip_action(action, scaler, clip_min, clip_max):
-    return np.clip(action * scaler, clip_min, clip_max)
+    return action * scaler

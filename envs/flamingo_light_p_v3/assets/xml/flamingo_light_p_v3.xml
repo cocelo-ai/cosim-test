@@ -2,77 +2,83 @@
 <mujoco model="flamingo_light_v1">
   <compiler angle="radian" />
   <option timestep="0.005" iterations="50" solver="Newton" jacobian="dense" integrator="implicitfast" />
-  
+
   <visual>
     <headlight diffuse="1 1 1" ambient="0.3 0.3 0.3" specular="0 0 0" />
     <rgba haze="0.15 0.25 0.35 1" />
     <global azimuth="120" elevation="-20" />
   </visual>
+
   <default>
     <default class="visual">
       <geom contype="0" conaffinity="0" group="2" />
     </default>
-    <default class="collision">
+    <default class="collision"> 
       <geom contype="1" conaffinity="2" group="3"/>
     </default>
     <default class="collision_mesh">
       <geom contype="1" conaffinity="1" group="0" />
     </default>
     <default class="joints">
-      <joint damping="0.1" stiffness="0.0" frictionloss="0.01" armature="0.01" actuatorfrclimited="true" actuatorfrcrange="-17 17" />
+      <joint damping="0.1" stiffness="0.0" frictionloss="0.01" armature="0.01"
+             actuatorfrclimited="true" actuatorfrcrange="-17 17" />
     </default>
     <default class="wheels">
-      <joint damping="0.0" stiffness="0.0" frictionloss="0.01" armature="0.01" actuatorfrclimited="true" actuatorfrcrange="-17 17" />
+      <joint damping="0.0" stiffness="0.0" frictionloss="0.01" armature="0.01"
+             actuatorfrclimited="true" actuatorfrcrange="-17 17" />
     </default>
+
+    <!-- 캐스터 조인트 저항 감소(끌림 완화) -->
     <default class="casters">
-       <joint damping="0.01" stiffness="0.0" frictionloss="0.0" armature="0.001" />
+      <joint damping="0.001" stiffness="0.0" frictionloss="0.0" armature="0.001" />
     </default>
   </default>
+
   <worldbody>
     <geom name="ground" pos="0 0 0" size="50 50 0.1" type="hfield"
       material="MatPlane" friction="0.8 0.02 0.01" condim="3"
       contype="2" conaffinity="1"/>
-    
+
     <body name="base_link" pos="0.00000000 0.00000000 0.113" quat="1 0 0 0">
-      <inertial 
-        mass="2.78446"
-        pos="-0.0195048 -0.00114127 -0.0369376"
-        fullinertia="0.00568153 0.0101431 0.0118545 2.08273e-05 -0.000167191 -9.10064e-07"/>
+      <inertial
+        mass="2.78445897269887"
+        pos="-0.0195047972877255 -0.00114127400058525 -0.0369375923521345"
+        fullinertia="0.00568152962783648 0.0101430658802046 0.0118545244442325 2.08273037995849e-05 -0.00016719134627533 -9.10064267154278e-07"/>
 
       <joint name="base_free_joint" type="free" damping="0.0" />
       <site name="imu" size="0.01" pos="0. 0. 0."/>
-      
+
       <geom name="base_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="base_link_fixed.STL" class="collision" />
       <geom name="base_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="base_link_fixed.STL" class="visual" />
 
       <body name="left_shoulder_link" pos="-0.0435 0.102 -0.037821"
             quat="0 0 0.7071068 0.7071068">
-        <joint name="left_shoulder_joint" type="hinge" class="joints" range="-0.75 0" axis="0 0 1" />
+        <joint name="left_shoulder_joint" type="hinge" class="joints" range="-0.7610 0" axis="0 0 1" />
         <site name="left_shoulder_joint_site" pos="0 0 0" quat="1 0 0 0" />
-        <inertial 
-            pos="0.0597356 -0.000169757 0.00751119" 
-            mass="0.120772" 
-            fullinertia="1.92659e-05 0.000373973 0.000390796 1.02981e-06 -3.98847e-06 1.13117e-08" />
-        
+        <inertial
+            pos="0.0597356 -0.000169757 0.00751119"
+            mass="0.120771696789504"
+            fullinertia="1.92659317592962e-05 0.000373972678532597 0.000390796235917043 1.02981305680237e-06 -3.98847080348154e-06 1.13117420615334e-08" />
+
         <geom name="left_shoulder_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="left_shoulder_link.STL" class="collision" />
         <geom name="left_shoulder_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="left_shoulder_link.STL" class="visual" />
 
         <body name="left_leg_link" pos="0.16 -0.00046086 0.00795" quat="1 0 0 0">
-          <joint name="left_leg_joint" type="hinge" class="joints" range="-3.14159 3.14159" axis="0 0 1" />
+          <joint name="left_leg_joint" type="hinge" class="joints" range="-3.14 3.14" axis="0 0 1" />
           <site name="left_leg_joint_site" pos="0 0 0" quat="1 0 0 0" />
-          <inertial 
-            pos="-0.0693084 -0.0176428 0.0090402" 
-            mass="0.267462" 
-            fullinertia="0.000149992 0.0010247 0.00114791 -9.45258e-05 5.89796e-05 4.39968e-06" />
+          <inertial
+            pos="-0.0693084137305347 -0.017642784546594 0.00904020062331872"
+            mass="0.267461827781674"
+            fullinertia="0.000149991864042205 0.00102470243009107 0.0011479057686297 -9.45257657469054e-05 5.89796301695987e-05 4.39967814374385e-06" />
           <geom name="left_leg_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="left_leg_link.STL" class="collision" />
           <geom name="left_leg_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="left_leg_link.STL" class="visual" />
 
           <body name="left_wheel_link" pos="-0.15892 -0.018539 0.052025" quat="1 0 0 0">
             <joint name="left_wheel_joint" type="hinge" class="wheels" limited="false" axis="0 0 1" />
-            <inertial 
-                pos="0 0 0.00851566" 
-                mass="0.600141" 
-                fullinertia="0.00111494 0.00111494 0.00206012 2.11893e-20 1.03238e-18 -4.48313e-19" />
+            <inertial
+                pos="8.91431026217582e-16 6.59194920871187e-17 0.00851566442519004"
+                mass="0.600140982541541"
+                fullinertia="0.0011149354481547 0.0011149354481547 0.00206011518509781 2.11892766754215e-20 1.03237588329996e-18 -4.48313359746433e-19" />
             <geom name="left_wheel_collision" type="cylinder" size="0.076 0.023" friction="0.8 0.02 0.01" class="collision" />
             <geom name="left_wheel_visual"    type="cylinder" size="0.076 0.023" class="visual" />
           </body>
@@ -80,32 +86,32 @@
       </body>
 
       <body name="right_shoulder_link" pos="-0.0435 -0.102 -0.037821" quat="0.7071068 0.7071068 0 0">
-        <joint name="right_shoulder_joint" type="hinge" class="joints" range="-0.75 0" axis="0 0 -1" />
+        <joint name="right_shoulder_joint" type="hinge" class="joints" range="-0.7610 0" axis="0 0 -1" />
         <site name="right_shoulder_joint_site" pos="0 0 0" quat="1 0 0 0" />
-        <inertial 
-            pos="-0.0597356 -0.000174367 0.00751362" 
-            mass="0.120772" 
-            fullinertia="1.92658e-05 0.000373973 0.000390796 -1.01359e-06 3.98847e-06 1.16649e-08" />
+        <inertial
+            pos="-0.0597356283497604 -0.00017436675863099 0.00751362431455366"
+            mass="0.120771696789505"
+            fullinertia="1.92658393877806e-05 0.000373972770904114 0.000390796235917044 -1.01358906305115e-06 3.98846978618152e-06 1.16649239484655e-08" />
         <geom name="right_shoulder_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="right_shoulder_link.STL" class="collision" />
         <geom name="right_shoulder_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="right_shoulder_link.STL" class="visual" />
 
         <body name="right_leg_link" pos="-0.16 -0.00046086 0.00805" quat="1 0 0 0">
-          <joint name="right_leg_joint" type="hinge" class="joints" range="-3.14159 3.14159" axis="0 0 -1" />
+          <joint name="right_leg_joint" type="hinge" class="joints" range="-3.14 3.14" axis="0 0 -1" />
           <site name="right_leg_joint_site" pos="0 0 0" quat="1 0 0 0" />
-          <inertial 
-            pos="0.06936 -0.0175109 0.0089902" 
-            mass="0.267462" 
-            fullinertia="0.000149956 0.00102474 0.00114791 9.44862e-05 -5.89854e-05 4.38473e-06" />
+          <inertial
+            pos="0.0693599817171648 -0.0175108766213583 0.0089901997101457"
+            mass="0.267461792062622"
+            fullinertia="0.000149955618261177 0.00102473823544115 0.00114790531824343 9.44862369660646e-05 -5.89853813838262e-05 4.38472541132712e-06" />
           <geom name="right_leg_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="right_leg_link.STL" class="collision" />
           <geom name="right_leg_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="right_leg_link.STL" class="visual" />
 
           <body name="right_wheel_link" pos="0.15892 -0.018539 0.051975" quat="1 0 0 0">
             <joint name="right_wheel_joint" type="hinge" class="wheels" limited="false" axis="0 0 -1" />
             <site name="right_wheel_joint_site" pos="0 0 0" quat="1 0 0 0" />
-            <inertial 
-                pos="0 0 0.00851566" 
-                mass="0.600141" 
-                fullinertia="0.00111494 0.00111494 0.00206012 4.08485e-19 -1.47387e-20 -7.39986e-20" />
+            <inertial
+                pos="-1.97953632652403e-15 -3.33066907387547e-15 0.00851566442519008"
+                mass="0.600140982541541"
+                fullinertia="0.0011149354481547 0.0011149354481547 0.00206011518509781 4.08485462369603e-19 -1.47387066706439e-20 -7.39986267535864e-20" />
             <geom name="right_wheel_collision" type="cylinder" size="0.076 0.023" friction="0.8 0.02 0.01" class="collision" />
             <geom name="right_wheel_visual"    type="cylinder" size="0.076 0.023" class="visual" />
           </body>
@@ -114,75 +120,108 @@
 
       <body name="left_upper_link" pos="-0.060601 0.1099 0.0091638"
             quat="0 0 0.7071068 0.7071068">
-        <joint name="left_upper_joint" type="hinge" class="joints" range="-3.14159 3.14159" axis="0 0 1" />
+        <joint name="left_upper_joint" type="hinge" class="joints" range="-3.14 3.14" axis="0 0 1" />
         <site name="left_upper_joint_site" pos="0 0 0" quat="1 0 0 0" />
-        <inertial 
-            pos="0.087469 -0.0104411 0.00142719" 
-            mass="0.0577772" 
-            fullinertia="3.64521e-06 0.0001087 0.000110842 1.47444e-05 -2.19916e-07 1.60571e-07" />
+        <inertial
+            pos="0.0874690292875401 -0.0104411245932605 0.00142719424785788"
+            mass="0.0577772091639369"
+            fullinertia="3.64521244339026e-06 0.00010869984328475 0.000110842213116557 1.47443769607531e-05 -2.19916289236511e-07 1.60570779108621e-07" />
         <geom name="left_upper_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="left_upper_link.STL" class="collision" />
         <geom name="left_upper_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="left_upper_link.STL" class="visual" />
       </body>
 
       <body name="right_upper_link" pos="-0.060601 -0.1099 0.0091638" quat="0.7071068 0.7071068 0 0">
-        <joint name="right_upper_joint" type="hinge" class="joints" range="-3.14159 3.14159" axis="0 0 -1" />
+        <joint name="right_upper_joint" type="hinge" class="joints" range="-3.14 3.14" axis="0 0 -1" />
         <site name="right_upper_joint_site" pos="0 0 0" quat="1 0 0 0" />
-        <inertial 
-            pos="-0.087469 -0.0104411 0.00143227" 
-            mass="0.0577772" 
-            fullinertia="3.64521e-06 0.0001087 0.000110842 -1.47444e-05 2.19917e-07 1.60571e-07" />
+        <inertial
+            pos="-0.0874690152895084 -0.0104411213597965 0.00143227230938398"
+            mass="0.057777209201571"
+            fullinertia="3.64521196878487e-06 0.000108699843782186 0.000110842213138297 -1.47443719199555e-05 2.19916693382766e-07 1.60570795115929e-07" />
         <geom name="right_upper_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="right_upper_link.STL" class="collision" />
         <geom name="right_upper_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="right_upper_link.STL" class="visual" />
       </body>
 
+      <!-- =========================
+           Casters: 끌림 완화 버전
+           - mesh 충돌 OFF (걸림 제거)
+           - sphere 접촉 ON (단순 접촉 + 낮은 마찰)
+           ========================= -->
+
       <body name="FL_caster_link" pos="0.0535 0.085 -0.11282"
             quat="0 0 0.7071068 0.7071068">
-        <joint name="FL_caster_joint" type="hinge" class="casters" axis="0 1 0" />
-        <site name="FL_caster_joint_site" pos="0 0 0" quat="1 0 0 0" />
-        <inertial 
-            pos="0 0 0" 
-            mass="0.0180725" 
+        <joint name="FL_caster_joint" type="hinge" class="casters" axis="0 0 1" />
+        <site name="FL_caster_joint_site" pos="0 0 0" quat="0 0 0 1" />
+        <inertial
+            pos="0 0 0"
+            mass="0.0180725"
             fullinertia="1.99574e-06 1.99574e-06 3.2136e-06 -1.19145e-37 8.58667e-23 -5.03761e-23" />
-        <geom name="FL_caster_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="FL_caster_link.STL" class="collision" />
-        <geom name="FL_caster_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="FL_caster_link.STL" class="visual" />
+
+        <!-- mesh collision OFF -->
+        <geom name="FL_caster_link_collision" pos="0 0 0" quat="1 0 0 0"
+              type="mesh" mesh="FL_caster_link.STL" class="collision"
+              contype="0" conaffinity="0" />
+
+        <!-- simple contact geom ON -->
+        <geom name="FL_caster_contact" type="sphere" size="0.01" pos="0 0 0.01"
+              class="collision" friction="0.05 0.001 0.0001" />
+
+        <geom name="FL_caster_link_visual" pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="FL_caster_link.STL" class="visual" />
       </body>
 
       <body name="FR_caster_link" pos="0.0535 -0.085 -0.11282" quat="0.7071068 0.7071068 0 0">
-        <joint name="FR_caster_joint" type="hinge" class="casters" axis="0 1 0" />
-        <site name="FR_caster_joint_site" pos="0 0 0" quat="1 0 0 0" />
-        <inertial 
-            pos="0 0 0" 
-            mass="0.0180725" 
+        <joint name="FR_caster_joint" type="hinge" class="casters" axis="0 0 -1" />
+        <site name="FR_caster_joint_site" pos="0 0 0" quat="0 0 0 1" />
+        <inertial
+            pos="0 0 0"
+            mass="0.0180725"
             fullinertia="1.99574e-06 1.99574e-06 3.2136e-06 1.41059e-37 8.64733e-23 5.03761e-23" />
-        <geom name="FR_caster_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="FR_caster_link.STL" class="collision" />
-        <geom name="FR_caster_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="FR_caster_link.STL" class="visual" />
+
+        <geom name="FR_caster_link_collision" pos="0 0 0" quat="1 0 0 0"
+              type="mesh" mesh="FR_caster_link.STL" class="collision"
+              contype="0" conaffinity="0" />
+        <geom name="FR_caster_contact" type="sphere" size="0.01" pos="0 0 0.01"
+              class="collision" friction="0.05 0.001 0.0001" />
+
+        <geom name="FR_caster_link_visual" pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="FR_caster_link.STL" class="visual" />
       </body>
 
       <body name="RL_caster_link" pos="-0.0905 0.085 -0.11282"
             quat="0 0 0.7071068 0.7071068">
-        <joint name="RL_caster_joint" type="hinge" class="casters" axis="0 1 0" />
-        <site name="RL_caster_joint_site" pos="0 0 0" quat="1 0 0 0" />
-        <inertial 
-            pos="0 0 0" 
-            mass="0.0180725" 
+        <joint name="RL_caster_joint" type="hinge" class="casters" axis="0 0 1" />
+        <site name="RL_caster_joint_site" pos="0 0 0" quat="0 0 0 1" />
+        <inertial
+            pos="0 0 0"
+            mass="0.0180725"
             fullinertia="1.99574e-06 1.99574e-06 3.2136e-06 -1.68894e-37 4.05069e-23 -5.19766e-23" />
-        <geom name="RL_caster_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="RL_caster_link.STL" class="collision" />
-        <geom name="RL_caster_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="RL_caster_link.STL" class="visual" />
+
+        <geom name="RL_caster_link_collision" pos="0 0 0" quat="1 0 0 0"
+              type="mesh" mesh="RL_caster_link.STL" class="collision"
+              contype="0" conaffinity="0" />
+        <geom name="RL_caster_contact" type="sphere" size="0.01" pos="0 0 0.01"
+              class="collision" friction="0.05 0.001 0.0001" />
+
+        <geom name="RL_caster_link_visual" pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="RL_caster_link.STL" class="visual" />
       </body>
 
-      <body name="RR_caster_link" pos="-0.0905 -0.085 -0.11282" quat="0.5 0.5 -0.5 0.5">
-        <joint name="RR_caster_joint" type="hinge" class="casters" axis="1 0 0" />
-        <site name="RR_caster_joint_site" pos="0 0 0" quat="1 0 0 0" />
-        <inertial 
-            pos="0 0 0" 
-            mass="0.0180725" 
+      <body name="RR_caster_link" pos="-0.0905 -0.085 -0.11282" quat="0.7071068 0.7071068 0 0">
+        <joint name="RR_caster_joint" type="hinge" class="casters" axis="0 0 -1" />
+        <site name="RR_caster_joint_site" pos="0 0 0" quat="0 0 0 1" />
+        <inertial
+            pos="0 0 0"
+            mass="0.0180725"
             fullinertia="1.99574e-06 1.99574e-06 3.2136e-06 -1.85848e-37 6.162e-22 -4.11135e-23" />
-        <geom name="RR_caster_link_collision" pos="0 0 0" quat="1 0 0 0" type="mesh" mesh="RR_caster_link.STL" class="collision" />
-        <geom name="RR_caster_link_visual"    pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="RR_caster_link.STL" class="visual" />
-      </body>
 
+        <geom name="RR_caster_link_collision" pos="0 0 0" quat="1 0 0 0"
+              type="mesh" mesh="RR_caster_link.STL" class="collision"
+              contype="0" conaffinity="0" />
+        <geom name="RR_caster_contact" type="sphere" size="0.01" pos="0 0 0.01"
+              class="collision" friction="0.05 0.001 0.0001" />
+
+        <geom name="RR_caster_link_visual" pos="0 0 0" quat="1 0 0 0" material="" type="mesh" mesh="RR_caster_link.STL" class="visual" />
+      </body>
     </body>
   </worldbody>
+
   <asset>
     <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072" />
     <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3" markrgb="0.8 0.8 0.8" width="300" height="300" />
@@ -209,7 +248,7 @@
     <mesh name="FR_caster_link.STL" file="../mesh/FR_caster_link.STL" />
     <mesh name="RL_caster_link.STL" file="../mesh/RL_caster_link.STL" />
     <mesh name="RR_caster_link.STL" file="../mesh/RR_caster_link.STL" />
-  
+
     <hfield name="rocky_easy" file="../terrain/rocky_easy.png" nrow="512" ncol="512" size="140 140 0.1 0.1" />
     <hfield name="rocky_hard" file="../terrain/rocky_hard.png" nrow="512" ncol="512" size="140 140 0.25 0.1" />
     <hfield name="slope_easy" file="../terrain/slope_easy.png" nrow="512" ncol="512" size="140 140 0.5 0.1" />
@@ -223,7 +262,7 @@
     <connect body2='left_upper_link' body1='left_leg_link' anchor='0.01561 0.02562 0.0' solimp="0.001 1"/>
     <connect body2='right_upper_link' body1='right_leg_link' anchor='-0.01561 0.02562 0.0' solimp="0.001 1"/>
   </equality>
-  
+
   <contact>
     <exclude name="exclude_left_uppler_link" body1="left_leg_link" body2="left_upper_link" />
     <exclude name="exclude_right_uppler_link" body1="right_leg_link" body2="right_upper_link" />
@@ -233,13 +272,21 @@
     <exclude name="exclude_right_shoulder_link" body1="right_shoulder_link" body2="right_leg_link" />
     <exclude name="exclude_base_link1" body1="base_link" body2="left_leg_link" />
     <exclude name="exclude_base_link2" body1="base_link" body2="right_leg_link" />
+
+    <!-- base_link vs casters 자기충돌 방지 -->
+    <exclude name="exclude_base_FL" body1="base_link" body2="FL_caster_link" />
+    <exclude name="exclude_base_FR" body1="base_link" body2="FR_caster_link" />
+    <exclude name="exclude_base_RL" body1="base_link" body2="RL_caster_link" />
+    <exclude name="exclude_base_RR" body1="base_link" body2="RR_caster_link" />
   </contact>
+
   <actuator>
     <motor joint="left_shoulder_joint" name="left_shoulder_motor" ctrllimited="true" ctrlrange="-17 17" />
     <motor joint="right_shoulder_joint" name="right_shoulder_motor" ctrllimited="true" ctrlrange="-17 17" />
     <motor joint="left_wheel_joint" name="left_wheel_motor" ctrllimited="true" ctrlrange="-17 17" />
     <motor joint="right_wheel_joint" name="right_wheel_motor" ctrllimited="true" ctrlrange="-17 17" />
   </actuator>
+
   <sensor>
     <framequat name="orientation" objtype="site" noise="0.1" objname="imu" />
     <framepos name="position" objtype="site" noise="0.1" objname="imu" />
@@ -248,4 +295,5 @@
     <accelerometer name="linear-acceleration" site="imu" noise="0.05" cutoff="157" />
     <magnetometer name="magnetometer" site="imu" />
   </sensor>
+
 </mujoco>
