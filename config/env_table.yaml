@@ -32,10 +32,10 @@
     "Kp_shoulder": 35
     "Kd_shoulder": 0.45
     "Kd_wheel": 0.3
-    "leg_max_torque": 36
-    "leg_max_vel": 43
+    "shoulder_max_torque": 36
+    "shoulder_max_vel": 53
     "wheel_max_torque": 17
-    "wheel_max_vel": 43
+    "wheel_max_vel": 53
 
 "flamingo_p_v3_1":
   "stacked_obs_order": ["dof_pos", "dof_vel", "ang_vel", "projected_gravity", "last_action"]

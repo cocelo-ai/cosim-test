@@ -165,8 +165,8 @@ class FlamingoPV31(MujocoEnv, utils.EzPickle):
         leg_torques = self.control_manager.pd_controller(self.kp_leg, action_scaled[4:6], pos_leg, self.kd_leg, 0.0, vel_leg)
         leg_torques = leg_torques * np.array([self.gamma, self.gamma], dtype=np.float64) if self.use_gear else leg_torques
         torques_list = [
-            np.clip(hip_torques, -self.config['hardware']['leg_max_torque'], self.config['hardware']['leg_max_torque']),
-            np.clip(shoulder_torques, -self.config['hardware']['leg_max_torque'], self.config['hardware']['leg_max_torque']),
+            np.clip(hip_torques, -self.config['hardware']['hip_max_torque'], self.config['hardware']['hip_max_torque']),
+            np.clip(shoulder_torques, -self.config['hardware']['shoulder_max_torque'], self.config['hardware']['shoulder_max_torque']),
             np.clip(leg_torques, -self.config['hardware']['leg_max_torque'], self.config['hardware']['leg_max_torque']),
         ]
         if self.has_wheels:
